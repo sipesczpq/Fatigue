@@ -2,11 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include<QRadioButton>
 #include<QPushButton>
-#include<QGroupBox>
 #include<QLineEdit>
-#include<QComboBox>
 #include<QToolBar>
 #include<QMenuBar>
 #include<QMenu>

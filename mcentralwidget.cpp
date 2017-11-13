@@ -1,7 +1,8 @@
 #include "mcentralwidget.h"
 #include <QHBoxLayout>
-#include<QGridLayout>
-#include<QVBoxLayout>
+#include <QGridLayout>
+#include <QVBoxLayout>
+#include <QtWidgets>
 McentralWidget::McentralWidget(QWidget *parent) : QWidget(parent)
 {
 
@@ -26,14 +27,10 @@ McentralWidget::McentralWidget(QWidget *parent) : QWidget(parent)
 //    typeComBox_3->insertItem(2,"JoinNo3");
     //左下界面部件
     loadLabel_1 = new QLabel(tr("Load history"));
-    loadLabel_2 = new QLabel(tr("Type:"));
-//   loadComBox_3 = new QComboBox();
-//    loadComBox_3->setEditable(true);
-//    loadComBox_3->setItemText(0,"constan amplitude");
-//    loadComBox_3->setItemText(1,"variable amplitude");
-//    loadComBox_3->setItemText(2,"random amplitude");
-    //右上界面部件
 
+
+    //右上界面部件
+    showGraphicsView_1 = new QGraphicsView();
     showLabel_1 = new QLabel(tr("Joint Configuration:"));
     //右下界面部件
     listLabel_1 = new QLabel(tr("Operations"));
@@ -51,25 +48,23 @@ McentralWidget::McentralWidget(QWidget *parent) : QWidget(parent)
     QGridLayout *rightlayout_1 = new QGridLayout;
     rightlayout_1->addWidget(showLabel_1,0,0);
     rightlayout_1->addWidget(showradioBGBox(),1,0,1,3);
-//    rightlayout_1->addWidget(showradioButton_2,1,0);
-//    rightlayout_1->addWidget(showradioButton_3,1,1);
-//    rightlayout_1->addWidget(showradioButton_4,1,2);
+    rightlayout_1->addWidget(showGraphicsView_1,2,0);
+
     //右下窗口界面
     QGridLayout *rightlayout_2 = new QGridLayout;
     rightlayout_2->addWidget(listLabel_1,0,0,1,1);
     rightlayout_2->addWidget(listPushButton_1,1,0,1,1);
     rightlayout_2->addWidget(listTableWidget_1,2,0,4,4);
     rightlayout_2->addWidget(listPushButton_2,6,0,1,1);
-//    //左上窗口界面
+   //左上窗口界面
      QGridLayout *leftlayout_1 = new QGridLayout;
     leftlayout_1->addWidget(typeLabel_1);
     leftlayout_1->addWidget(typeLabel_2);
-//    //leftlayout_1->addWidget(typeComBox_3,1,1);
-//    //左下窗口界面
+  //leftlayout_1->addWidget(typeComBox_3,1,1);
+   //左下窗口界面
     QGridLayout *leftlayout_2 = new QGridLayout;
     leftlayout_2->addWidget(loadLabel_1,0,0);
-    leftlayout_2->addWidget(loadLabel_2,1,0);
-//    //leftlayout_2->addWidget(loadComBox_3,1,1);
+    leftlayout_2->addWidget(loadhisthoryGBox(),1,0,1,5);
     //右部垂直布局
     QVBoxLayout *rightlayout = new QVBoxLayout;
     rightlayout->addLayout(rightlayout_1);
@@ -86,20 +81,69 @@ McentralWidget::McentralWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-QGroupBox *McentralWidget::showradioBGBox()
+QGroupBox *McentralWidget::showradioBGBox()                                          //右上radiobuttonBoxGroup部件
  {
-    QHBoxLayout *showradioButtonlayout = new QHBoxLayout;                                 //radiobutton layout
+    QGroupBox *showradioBGBox = new QGroupBox(this);
     showradioButton_2 = new QRadioButton(tr("Original"));
     showradioButton_3 = new QRadioButton(tr("Stress"));
     showradioButton_4 = new QRadioButton(tr("FatigueLife"));
-    QGroupBox *showradioBGBox = new QGroupBox(this);
     showradioButton_2->setChecked(true);
-    showradioBGBox->setExclusive(true);                                                   //设置互斥
+
+    QHBoxLayout *showradioButtonlayout = new QHBoxLayout;                             //radiobutton layout
     showradioButtonlayout->addWidget(showradioButton_2);
     showradioButtonlayout->addWidget(showradioButton_3);
     showradioButtonlayout->addWidget(showradioButton_4);
     showradioButtonlayout->addStretch(1);
     showradioBGBox->setLayout(showradioButtonlayout);
-//2131231
      return showradioBGBox;
  }
+QGroupBox *McentralWidget::loadhisthoryGBox()                                         //左下load history BoxGroup部件
+{
+    QGroupBox *loadhisthoryGBox = new QGroupBox(this);
+    loadLabel_2 = new QLabel(tr("Type:"));
+    loadComBox_3 = new QComboBox(this);
+    loadComBox_3->addItem(tr("Constant amplitude"));
+    loadComBox_3->addItem(tr("variable amplitude"));
+    loadComBox_3->addItem(tr("random amplitude"));
+    QGridLayout *loadhistorylayout_1 = new QGridLayout;
+    listTableWidget_2 = new QTableWidget();
+    listTableWidget_2->setColumnCount(2);                                         //设置列数
+    listTableWidget_2->setRowCount(4);
+    QStringList QStringList_2;
+    QStringList_2<<"MAX"<<"Min";                                                 //列标题设置
+    listTableWidget_2->setHorizontalHeaderLabels(QStringList_2);
+    QStringList QStringList_3;
+    QStringList_3<<"PointA"<<"PointB"<<"PointC"<<"PointD";                        //行标题设置
+    listTableWidget_2->setVerticalHeaderLabels(QStringList_3);
+    listTableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    loadhistorylayout_1->addWidget(loadLabel_2,0,0);
+    loadhistorylayout_1->addWidget(loadComBox_3,0,1);
+    loadhistorylayout_1->addWidget(listTableWidget_2,1,0,1,4);
+    loadhisthoryGBox->setLayout(loadhistorylayout_1);
+    return loadhisthoryGBox;
+}
+QGroupBox *McentralWidget::jointypeGBox()                                         //左下load history BoxGroup部件
+{
+    QGroupBox *jointypeGBox = new QGroupBox(this);
+    loadLabel_2 = new QLabel(tr("Type:"));
+    loadComBox_3 = new QComboBox(this);
+    loadComBox_3->addItem(tr("Constant amplitude"));
+    loadComBox_3->addItem(tr("variable amplitude"));
+    loadComBox_3->addItem(tr("random amplitude"));
+    QGridLayout *loadhistorylayout_1 = new QGridLayout;
+    listTableWidget_2 = new QTableWidget();
+    listTableWidget_2->setColumnCount(2);                                         //设置列数
+    listTableWidget_2->setRowCount(4);
+    QStringList QStringList_2;
+    QStringList_2<<"MAX"<<"Min";                                                 //列标题设置
+    listTableWidget_2->setHorizontalHeaderLabels(QStringList_2);
+    QStringList QStringList_3;
+    QStringList_3<<"PointA"<<"PointB"<<"PointC"<<"PointD";                        //行标题设置
+    listTableWidget_2->setVerticalHeaderLabels(QStringList_3);
+    listTableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    loadhistorylayout_1->addWidget(loadLabel_2,0,0);
+    loadhistorylayout_1->addWidget(loadComBox_3,0,1);
+    loadhistorylayout_1->addWidget(listTableWidget_2,1,0,1,4);
+    jointypeGBox->setLayout(loadhistorylayout_1);
+    return jointypeGBox;
+}
