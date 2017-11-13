@@ -100,6 +100,6 @@ QGroupBox *McentralWidget::showradioBGBox()
     showradioButtonlayout->addWidget(showradioButton_4);
     showradioButtonlayout->addStretch(1);
     showradioBGBox->setLayout(showradioButtonlayout);
-
+//2131231
      return showradioBGBox;
  }
